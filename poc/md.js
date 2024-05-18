@@ -42,8 +42,33 @@ async function fetchAndParse(url) {
         // Dynamically import node-fetch
         const fetch = (await import('node-fetch')).default;
 
+        // add user agent
+        // User-Agent: Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/124.0.0.0 Safari/537.36
+
         // Fetch the HTML content from the URL
         const response = await fetch(url);
+
+        // const response = await fetch(url, {
+        //     "headers": {
+        //         "accept": "text/html,application/xhtml+xml,application/xml;q=0.9,image/avif,image/webp,image/apng,*/*;q=0.8,application/signed-exchange;v=b3;q=0.7",
+        //         "accept-language": "zh-CN,zh;q=0.9,en-US;q=0.8,en;q=0.7",
+        //         "cache-control": "max-age=0",
+        //         "sec-ch-ua": "\"Chromium\";v=\"124\", \"Google Chrome\";v=\"124\", \"Not-A.Brand\";v=\"99\"",
+        //         "sec-ch-ua-mobile": "?0",
+        //         "sec-ch-ua-platform": "\"Windows\"",
+        //         "sec-fetch-dest": "document",
+        //         "sec-fetch-mode": "navigate",
+        //         "sec-fetch-site": "same-origin",
+        //         "sec-fetch-user": "?1",
+        //         "upgrade-insecure-requests": "1",
+        //         //"cookie": "GRID=b8983f6-add565a-add6ce4-c3626e8; LF_ID=b8983f6-add565a-add6ce4-c3626e8; __tea_cache_tokens_20000743={%22web_id%22:%227369952833833294092%22%2C%22user_unique_id%22:%227369952833833294092%22%2C%22timestamp%22:1715951172767%2C%22_type_%22:%22default%22}; _r_c=1; SERVERID=3431a294a18c59fc8f5805662e2bd51e|1715951175|1715950856",
+        //         "Referer": "https://www.infoq.cn/",
+        //         "Referrer-Policy": "strict-origin-when-cross-origin"
+        //     },
+        //     "body": null,
+        //     "method": "GET"
+        // });
+
         const html = await response.text();
 
         // Create a DOM environment using jsdom
@@ -60,6 +85,7 @@ async function fetchAndParse(url) {
         const article = reader.parse();
 
         const markdown = turndownService.turndown(article.content);
+        console.log(url)
         console.log(article.title)
         console.log(markdown)
 
@@ -72,5 +98,12 @@ async function fetchAndParse(url) {
 // fetchAndParse("https://www.baeldung.com/elasticsearch-aggregation-query");
 // fetchAndParse("https://www.cnblogs.com/mangod/p/18198186")
 
-fetchAndParse("https://www.cnblogs.com/")
+// fetchAndParse("https://www.cnblogs.com/")
 // fetchAndParse("https://news.cnblogs.com/")
+// fetchAndParse("https://www.infoq.cn/news/6i9qbIGk02IdUiAfNSqi")
+
+// fetchAndParse("https://mp.weixin.qq.com/s/dDezDJbqRBe-8TnZRFsXLQ")
+fetchAndParse("https://mp.weixin.qq.com/s/70cRoSek1n2b90KDB81XeQ")
+
+
+document.querySelector("#img-content")
